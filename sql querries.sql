@@ -1,5 +1,6 @@
 create database football_ticket_booking_system
 
+  -- users table creation
 create table users(
   user_id serial primary key,
   full_name varchar(255),
@@ -15,3 +16,12 @@ INSERT INTO Users (user_id, full_name, email, role, phone_number) VALUES
 (4, 'Jannat Ara', 'jannat@mail.com', 'Football Fan', NULL);
 
 
+
+-- matches table creation
+create table matches(
+  match_id serial primary key,
+  fixture varchar(100),
+  tournament_category varchar(100),
+  base_ticket_price decimal(10,2),
+  match_status varchar(50)
+)
