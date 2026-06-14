@@ -35,9 +35,9 @@ create table matches(
 -- 3. CREATE BOOKINGS TABLE
 -- =========================================================================
 CREATE TABLE Bookings (
-    booking_id serial,
-    user_id smallint,
-    match_id smallint,
+    booking_id serial primary key,
+    user_id smallint references users(user_id),
+    match_id smallint references matches(match_id),
     seat_number varchar(20),
     payment_status varchar(20),
     total_cost decimal(10,2)
@@ -93,5 +93,24 @@ where payment_status is null
 
 
 -- Query 4: Retrieve match booking details along with the User's full name and the scheduled Match fixture teams.
+select booking_id,full_name, fixture, total_cost from bookings
+inner join users on  bookings.user_id = users.user_id 
+inner join matches on bookings.match_id = matches.match_id
+
+
+-- Query 5: Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a 
+-- ticket are still listed.
+select users.user_id, full_name, booking_id from users
+left join bookings on users.user_id = bookings.user_id
+
+
+-- Query 6: Find all ticket bookings where the total cost is strictly higher than the average cost of all ticket bookings.
+select booking_id, match_id, total_cost from bookings 
+where total_cost >(select avg(total_cost) from bookings)
+
+
+-- Query 7: Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match.
+select match_id, fixture, base_ticket_price from matches
+order by base_ticket_price desc limit 2 offset 1 
 
 
