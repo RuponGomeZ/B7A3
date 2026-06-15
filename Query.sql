@@ -36,8 +36,8 @@ create table matches(
 -- =========================================================================
 CREATE TABLE Bookings (
     booking_id serial primary key,
-    user_id smallint references users(user_id),
-    match_id smallint references matches(match_id),
+    user_id int references users(user_id),
+    match_id int references matches(match_id),
     seat_number varchar(20),
     payment_status varchar(20),
     total_cost decimal(10,2)
@@ -73,10 +73,7 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 (504, 2, 101, NULL, NULL, 150.00),
 (505, 3, 102, 'C-20', 'Pending', 120.00);
 
--- TODO: delete after complete
-select * from matches
-select * from bookings
-select * from users
+
   
 -- Query 1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'.
 select match_id,fixture,base_ticket_price from matches
